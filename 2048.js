@@ -51,10 +51,12 @@ function updateTile(tile,num) {
 
 document.addEventListener("keyup", (e) => {
     if(e.code == "ArrowLeft"){
-        sliderLeft()
+        slideLeft()
     }
     else if(e.code == "ArrowRight"){
-        sliderRight()
+        slideRight()
+    }else if(e.code == "ArrowUp"){
+        slideUp()
     }
 })
 
@@ -87,7 +89,7 @@ function slide(row){
 
 }
 
-function sliderLeft() {
+function slideLeft() {
     for(let i = 0; i < rows; i++){
         let row = board[i]
         row = slide(row)
@@ -102,7 +104,7 @@ function sliderLeft() {
     }
 }
 
-function sliderRight() {
+function slideRight() {
     for(let i = 0; i < rows; i++){
         let row = board[i]
         row.reverse()
@@ -116,5 +118,23 @@ function sliderRight() {
             updateTile(tile,num)
         }
 
+    }
+}
+
+function slideUp(){
+    for(let j = 0; j < columns; j++){
+        let row = [board[0][j],board[1][j],board[2][j],board[3][j]]
+        row = slide(row)
+        board[0][j] = row[0]
+        board[1][j] = row[1]
+        board[2][j] = row[2]
+        board[3][j] = row[3]
+        for(let i = 0; i < rows; i++){
+            let tile = document.getElementById(i.toString() + "-" + j.toString())
+            let num = board[i][j]
+            updateTile(tile,num)
+        }
+
+    
     }
 }
