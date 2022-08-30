@@ -8,18 +8,18 @@ window.onload = function() {
 }
 
 function setGame() {
-    // board = [
-    //     [0,0,0,0],
-    //     [0,0,0,0],
-    //     [0,0,0,0],
-    //     [0,0,0,0]
-    // ]
     board = [
-        [2,2,2,2],
-        [2,2,2,2],
-        [4,4,8,8],
-        [4,4,8,8]
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0],
+        [0,0,0,0]
     ]
+    // board = [
+    //     [2,2,2,2],
+    //     [2,2,2,2],
+    //     [4,4,8,8],
+    //     [4,4,8,8]
+    // ]
     
     for(let i = 0; i < rows; i++){
         for(let j = 0; j < columns; j++){
@@ -29,6 +29,40 @@ function setGame() {
             let num = board[i][j]
             updateTile(tile,num)
             document.getElementById("board").append(tile)
+        }
+    }
+    setTwo()
+    setTwo()
+
+}
+
+function hasEmptyTile(){ 
+    for(let i = 0; i < rows; i++){
+        for(let j = 0; j < columns; j++){
+            if(board[i][j] == 0){
+                return true
+            }
+            
+        }
+    }
+    return false
+}
+function setTwo(){
+    if(!hasEmptyTile()){
+        return;
+    }
+    let found = false
+    while(!found){
+        //random i , j
+        let i = Math.floor(Math.random() * rows)
+        let j = Math.floor(Math.random() * columns)
+
+        if(board[i][j] == 0){
+            board[i][j] = 2
+            let tile = document.getElementById(i.toString()+ "-" + j.toString())
+            tile.innerText = "2"
+            tile.classList.add("x2")
+            found = true
         }
     }
 
