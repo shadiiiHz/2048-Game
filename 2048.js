@@ -53,6 +53,9 @@ document.addEventListener("keyup", (e) => {
     if(e.code == "ArrowLeft"){
         sliderLeft()
     }
+    else if(e.code == "ArrowRight"){
+        sliderRight()
+    }
 })
 
 function filterZero(row){
@@ -88,6 +91,23 @@ function sliderLeft() {
     for(let i = 0; i < rows; i++){
         let row = board[i]
         row = slide(row)
+        board[i] = row
+
+        for(let j = 0; j < columns; j++){
+            let tile = document.getElementById(i.toString() + "-" + j.toString())
+            let num = board[i][j]
+            updateTile(tile,num)
+        }
+
+    }
+}
+
+function sliderRight() {
+    for(let i = 0; i < rows; i++){
+        let row = board[i]
+        row.reverse()
+        row = slide(row)
+        row.reverse()
         board[i] = row
 
         for(let j = 0; j < columns; j++){
