@@ -8,15 +8,21 @@ window.onload = function() {
 }
 
 function setGame() {
+    // board = [
+    //     [0,0,0,0],
+    //     [0,0,0,0],
+    //     [0,0,0,0],
+    //     [0,0,0,0]
+    // ]
     board = [
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0]
+        [2,2,2,2],
+        [2,2,2,2],
+        [4,4,8,8],
+        [4,4,8,8]
     ]
     
     for(let i = 0; i < rows; i++){
-        for(let j = 0; j < rows; j++){
+        for(let j = 0; j < columns; j++){
             //<div id="0-0"></div>
             let tile = document.createElement("div")
             tile.id = i.toString() + "-" + j.toString()
@@ -41,7 +47,54 @@ function updateTile(tile,num) {
         }
     }
 
+}
 
+document.addEventListener("keyup", (e) => {
+    if(e.code == "ArrowLeft"){
+        sliderLeft()
+    }
+})
 
+function filterZero(row){
+    return row.filter(num => num != 0) // create a new array without zeroes
+}
 
+function slide(row){
+    //[0,2,2,2]
+    row = filterZero(row) //get rid of zeroes => [2,2,2]
+
+    //slide
+    for(let i = 0; i < row.length-1; i++){
+        //check every 2
+        if(row[i] == row[i+1]){
+            row[i] *= 2
+            row[i+1] = 0
+            score += row[i]
+        }// [2,2,2] => [4,0,2]
+    }
+    row = filterZero(row) // [4,2]
+
+    //add zeroes
+    while(row.length < columns){
+        row.push(0)
+    }//[4,2,0,0]
+    return row
+
+    
+
+}
+
+function sliderLeft() {
+    for(let i = 0; i < rows; i++){
+        let row = board[i]
+        row = slide(row)
+        board[i] = row
+
+        for(let j = 0; j < columns; j++){
+            let tile = document.getElementById(i.toString() + "-" + j.toString())
+            let num = board[i][j]
+            updateTile(tile,num)
+        }
+
+    }
 }
